@@ -7,7 +7,7 @@
 
     position: 'center',
 
-    fitToView 		: true,
+    fitToView 		: false,
     spaceFromEdge 	: 35,
 
     overlay : {
@@ -65,7 +65,7 @@
   methods = {
     init : function(opts){
 
-      options = $.extend({}, options, opts);
+      opts = $.extend(true, {}, options, opts);
 
       return this.each(function(){
         data = $(this).data('prodigal');
@@ -73,7 +73,7 @@
         if(!data){
           // Lets assign the options to the data of the element in question
           // so we know how to operate the pop up
-          $(this).data('prodigal', options).on('click', methods.open);
+          $(this).data('prodigal', opts).on('click', methods.open);
         }
       });
     },
@@ -114,7 +114,7 @@
       if(options._wrapper != null || options._overlay != null)
         methods.close(); // Lets close any previous one
 
-      opts = $.extend({}, options, $(this).data('prodigal')); // Ensure a copy on write to not effect our static options
+      opts = $.extend(true, {}, options, $(this).data('prodigal')); // Ensure a copy on write to not effect our static options
 
       if(options.isActive == false){
         options._overlay = $(opts.tpl.overlay).css({ 'opacity' : opts.overlay.opacity, 'display' : opts.overlay.show ? 'block' : 'none' }).appendTo('body');
@@ -191,7 +191,7 @@
           // Lets add this one to the options
           options._media[i] = image;
         });
-
+console.log(options._media);
         // If no images are selected and the dialog was just opened lets select the first one
         if(options._wrapper.find('.prodigal_img_selected').length <= 0){
         	options._wrapper.find('.prodigal_gallery_right .prodigal_thumb').get(0).trigger('click');
@@ -260,7 +260,7 @@
       // This centers our image since NO CSS hacks worked for me
       // These calls must be chained otherwise the margin-top will be off on resize.
       image.css({ height: image.height() > gallery_left.height() ? gallery_left.height() : image.height() })
-      		.css({ marginTop: ((gallery_left.height())-image.outerHeight())/2 });
+      image.css({ marginTop: ((gallery_left.height())-image.outerHeight())/2 });
 
       // if we use an iframe then size the iframe to the left
       // This will just do nothing if there is no iframe
