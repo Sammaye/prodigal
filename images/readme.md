@@ -1,0 +1,1 @@
+Images stolen from fancyboxes demo.
