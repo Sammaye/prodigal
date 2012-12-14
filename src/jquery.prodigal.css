@@ -59,6 +59,7 @@
     text-align: center;
 	position:relative;
 	padding:20px;
+	overflow:hidden;
 }
 
 .prodigal_gallery_wrapper .prodigal_gallery_left img{
