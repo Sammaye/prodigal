@@ -7,7 +7,7 @@
 
     position: 'center',
 
-    fitToView 		: true,
+    fitToView 		: false,
     spaceFromEdge 	: 35,
 
     overlay : {
@@ -109,7 +109,7 @@
     },
 
     open: function(e){
-      e.preventDefault();
+    	e.preventDefault();
 
       if(options._wrapper != null || options._overlay != null)
         methods.close(); // Lets close any previous one
@@ -194,7 +194,7 @@
 
         // If no images are selected and the dialog was just opened lets select the first one
         if(options._wrapper.find('.prodigal_img_selected').length <= 0){
-        	options._wrapper.find('.prodigal_gallery_right .prodigal_thumb').get(0).trigger('click');
+        	options._wrapper.find('.prodigal_gallery_right .prodigal_thumb').first().trigger('click');
         }
       }
 
