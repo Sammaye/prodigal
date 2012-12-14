@@ -7,7 +7,7 @@
 
     position: 'center',
 
-    fitToView 		: false,
+    fitToView 		: true,
     spaceFromEdge 	: 35,
 
     overlay : {
@@ -191,7 +191,7 @@
           // Lets add this one to the options
           options._media[i] = image;
         });
-console.log(options._media);
+
         // If no images are selected and the dialog was just opened lets select the first one
         if(options._wrapper.find('.prodigal_img_selected').length <= 0){
         	options._wrapper.find('.prodigal_gallery_right .prodigal_thumb').get(0).trigger('click');
@@ -218,7 +218,6 @@ console.log(options._media);
       // This will position our dialog initially within the view
       options._wrapper.css({ top: pagey+opts.spaceFromEdge, left: pagex+opts.spaceFromEdge });
 
-      //console.log($(window).height());
       if(opts.fitToView){
         // Make it fit to current view
         options._wrapper.css({ width: $(window).width()-(opts.spaceFromEdge*2), height: $(window).height()-(opts.spaceFromEdge*2) });
