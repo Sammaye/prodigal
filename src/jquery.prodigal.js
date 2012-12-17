@@ -412,7 +412,7 @@
 	/**
 	 * Key bindings for all sorts of things
 	 */
-	$(document).on('keypress', function(e){
+	$(document).on('keydown', function(e){
 		if (e.keyCode == 27) { methods.close(); } // ESC = close window
 	});
 
