@@ -270,8 +270,9 @@
 				var originalWidth = image.outerWidth(),
 					originalHeight = image.outerHeight();
 
-				image.css({ height: image.outerHeight() > gallery_left.height() ? gallery_left.height() : image.outerHeight() });
-				if(image.outerWidth() > gallery_left.width() && originalHeight < gallery_left.height()){
+				if(image.outerHeight() > gallery_left.height()){
+					image.css({ height: gallery_left.height() });
+				}else if(image.outerWidth() > gallery_left.width() && originalHeight < gallery_left.height()){
 					image.css({ width: gallery_left.width() })
 				}
 				image.css({ marginTop: ((gallery_left.height())-image.outerHeight())/2 });
