@@ -97,20 +97,21 @@
 		close : function(){
 			// THANK YOU IE for once again forcing me to customise the way I remove stuff
 			// This line is because if you just remove the wrapper on IE8 the iframe will become full screen
-			options._wrapper.find('.prodigal_gallery_left iframe').remove();
-
-			options._overlay.remove();
-			options._wrapper.remove();
-
-
-			options._overlay = null;
-			options._wrapper = null;
+			if(options._wrapper){
+				options._wrapper.find('.prodigal_gallery_left iframe').remove();
+	
+				options._overlay.remove();
+				options._wrapper.remove();
+	
+				options._overlay = null;
+				options._wrapper = null;
+			}
 			options.isActive = false;
 		},
 
 		open: function(e){
 			e.preventDefault();
-
+			
 			if(options._wrapper != null || options._overlay != null)
 				methods.close(); // Lets close any previous one
 
@@ -176,11 +177,27 @@
 						}
 					});
 
-					image.find('img').css({ width: opts.thumbs.width !== null ? opts.thumbs.width : 'auto', height: opts.thumbs.height !== null ? opts.thumbs.height : 'auto' });
-
+					//image.find('img').css({ width: opts.thumbs.width !== null ? opts.thumbs.width : 'auto', height: opts.thumbs.height !== null ? opts.thumbs.height : 'auto' });
 					// Lets append each to the gallery itself
 					options._wrapper.find('.prodigal_gallery_right').append(image.on('click', imageClickHandler));
 
+					if(opts.thumbs.width !== null || opts.thumbs.height !== null){
+
+						var imgEl = image.find('img'),
+							originalWidth = imgEl.outerWidth(),
+							originalHeight = imgEl.outerHeight();
+
+						if(imgEl.outerHeight() > opts.thumbs.height && opts.thumbs.height !== null){
+							imgEl.css({ height: opts.thumbs.height });
+						}else if(imgEl.outerWidth() > opts.thumbs.width && originalHeight < opts.thumbs.height && opts.thumbs.width !== null){
+							imgEl.css({ width: gallery_left.width() });
+						}
+
+						if(imgEl.outerWidth() > opts.thumbs.width && opts.thumbs.width !== null){
+							imgEl.css({ width: opts.thumbs.width, height: 'auto' });
+						}
+					}
+					
 					// If the target we clicked on is the one being seen then lets select it
 					if(target.parents('.prodigal-thumbs').get(0) == $(obj).get(0)){
 						image.trigger('click');
@@ -208,7 +225,7 @@
 		 * This deals with the resize of the modal and its gallery
 		 */
 		resize: function(resizeImage){
-
+			
 			if(resizeImage == null){
 				resizeImage = true;
 			}
@@ -273,8 +290,13 @@
 				if(image.outerHeight() > gallery_left.height()){
 					image.css({ height: gallery_left.height() });
 				}else if(image.outerWidth() > gallery_left.width() && originalHeight < gallery_left.height()){
-					image.css({ width: gallery_left.width() })
+					image.css({ width: gallery_left.width() });
 				}
+
+				if(image.outerWidth() > gallery_left.width()){
+					image.css({ width: gallery_left.width(), height: 'auto' });
+				}
+
 				image.css({ marginTop: ((gallery_left.height())-image.outerHeight())/2 });
 			}
 
@@ -413,7 +435,8 @@
 	 * Key bindings for all sorts of things
 	 */
 	$(document).on('keydown', function(e){
-		if (e.keyCode == 27) { methods.close(); } // ESC = close window
+		if(options._wrapper!==null)
+			if (e.keyCode == 27) { methods.close(); } // ESC = close window
 	});
 
 
